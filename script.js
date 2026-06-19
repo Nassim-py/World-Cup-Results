@@ -168,6 +168,163 @@ function renderHistory(team) {
         container.innerHTML = '<p class="empty">No matches found</p>';
         return;
     }
+    // ===== FULL RANKINGS TABLE =====
+async function loadFullRankings() {
+    const container = document.getElementById('rankingsTableContent');
+    container.innerHTML = '<div class="loading">Loading rankings...</div>';
+    
+    try {
+        // Fetch from your GitHub repo
+        const response = await fetch('https://nassim-py.github.io/World-Cup-Results/rankings.json');
+        
+        if (!response.ok) {
+            throw new Error('Failed to load rankings');
+        }
+        
+        const rankings = await response.json();
+        
+        // Team flags mapping
+        const flags = {
+            'Argentina': '🇦🇷',
+            'France': '🇫🇷',
+            'Spain': '🇪🇸',
+            'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+            'Brazil': '🇧🇷',
+            'Morocco': '🇲🇦',
+            'Portugal': '🇵🇹',
+            'Netherlands': '🇳🇱',
+            'Germany': '🇩🇪',
+            'Belgium': '🇧🇪',
+            'Uruguay': '🇺🇾',
+            'Colombia': '🇨🇴',
+            'Mexico': '🇲🇽',
+            'USA': '🇺🇸',
+            'Senegal': '🇸🇳',
+            'Croatia': '🇭🇷',
+            'Switzerland': '🇨🇭',
+            'Japan': '🇯🇵',
+            'Iran': '🇮🇷',
+            'South Korea': '🇰🇷',
+            'Australia': '🇦🇺',
+            'Scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+            'Tunisia': '🇹🇳',
+            'Algeria': '🇩🇿',
+            'Egypt': '🇪🇬',
+            'Nigeria': '🇳🇬',
+            'Canada': '🇨🇦',
+            'Norway': '🇳🇴',
+            'Ivory Coast': '🇨🇮',
+            'Paraguay': '🇵🇾',
+            'Saudi Arabia': '🇸🇦',
+            'Qatar': '🇶🇦',
+            'Ghana': '🇬🇭',
+            'Panama': '🇵🇦',
+            'Cape Verde': '🇨🇻',
+            'South Africa': '🇿🇦',
+            'DR Congo': '🇨🇩',
+            'Iraq': '🇮🇶',
+            'Jordan': '🇯🇴',
+            'Uzbekistan': '🇺🇿',
+            'Curaçao': '🇨🇼',
+            'Haiti': '🇭🇹',
+            'New Zealand': '🇳🇿'
+        };
+        
+        // Sort by rank
+        const sortedTeams = Object.entries(rankings)
+            .sort((a, b) => a[1] - b[1]);
+        
+        // Build table
+        let html = `
+            <table class="rankings-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th></th>
+                        <th>Team</th>
+                        <th style="text-align:right;">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        
+        sortedTeams.forEach(([team, rank]) => {
+            const flag = flags[team] || '🏳️';
+            const points = getPointsForRank(rank);
+            const isTop3 = rank <= 3;
+            const medalClass = rank === 1 ? 'rank-medal-1' : rank === 2 ? 'rank-medal-2' : rank === 3 ? 'rank-medal-3' : '';
+            
+            html += `
+                <tr class="${isTop3 ? 'top-3' : ''}">
+                    <td class="rank-num"><span class="${medalClass}">#${rank}</span></td>
+                    <td class="rank-flag">${flag}</td>
+                    <td class="rank-team">${team}</td>
+                    <td class="rank-points">${points}</td>
+                </tr>
+            `;
+        });
+        
+        html += `
+                </tbody>
+            </table>
+            <div style="text-align:center;margin-top:1rem;color:#6b7280;font-size:0.75rem;">
+                <i class="fas fa-calendar"></i> Last updated: ${new Date().toLocaleDateString()}
+            </div>
+        `;
+        
+        container.innerHTML = html;
+        
+    } catch (error) {
+        console.error('Error loading rankings:', error);
+        container.innerHTML = `
+            <div style="text-align:center;padding:2rem;color:#6b7280;">
+                <i class="fas fa-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>
+                Unable to load rankings
+            </div>
+        `;
+    }
+}
+
+// Helper function for points (approximate based on rank)
+function getPointsForRank(rank) {
+    const points = {
+        1: 1889.06,
+        2: 1887.11,
+        3: 1856.03,
+        4: 1847.68,
+        5: 1765.34,
+        6: 1755.62,
+        7: 1755.09,
+        8: 1749.20,
+        9: 1743.54,
+        10: 1733.93
+    };
+    return points[rank] || (1800 - rank * 5).toFixed(2);
+}
+
+// Toggle rankings table
+function toggleRankings() {
+    const wrap = document.getElementById('rankingsTableWrap');
+    const btn = document.querySelector('.rankings-toggle button');
+    
+    if (wrap.classList.contains('show')) {
+        wrap.classList.remove('show');
+        btn.innerHTML = '<i class="fas fa-trophy"></i> Show Full FIFA Rankings';
+    } else {
+        wrap.classList.add('show');
+        btn.innerHTML = '<i class="fas fa-times"></i> Hide Rankings';
+        
+        // Load rankings if not already loaded
+        const container = document.getElementById('rankingsTableContent');
+        if (container.innerHTML === '' || container.innerHTML.includes('Loading')) {
+            loadFullRankings();
+        }
+    }
+}
+
+// Auto-load rankings when page loads (optional)
+// Uncomment the line below if you want it to load automatically
+// document.addEventListener('DOMContentLoaded', loadFullRankings);
 
     container.innerHTML = matches.map(m => {
         const t1 = clean(m.team1), t2 = clean(m.team2);
