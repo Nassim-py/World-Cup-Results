@@ -280,3 +280,133 @@ td:last-child { font-weight: 700; color: #ffd700; }
     color: #f59e0b;
     text-decoration: underline;
 }
+
+/* Full Rankings Table */
+.rankings-toggle {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.rankings-toggle button {
+    background: linear-gradient(135deg, #ffd700, #f59e0b);
+    color: #1a1a2e;
+    font-weight: 800;
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.rankings-toggle button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.rankings-table-wrap {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    max-height: 500px;
+    overflow-y: auto;
+    display: none;
+}
+
+.rankings-table-wrap.show {
+    display: block;
+}
+
+.rankings-table-wrap h3 {
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.rankings-table-wrap h3 i {
+    color: #ffd700;
+    margin-right: 0.5rem;
+}
+
+.rankings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rankings-table th {
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.rankings-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #d1d5db;
+}
+
+.rankings-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.rankings-table .rank-num {
+    font-weight: 700;
+    color: #ffd700;
+    width: 40px;
+}
+
+.rankings-table .rank-flag {
+    font-size: 1.5rem;
+    width: 40px;
+}
+
+.rankings-table .rank-team {
+    font-weight: 600;
+    color: white;
+}
+
+.rankings-table .rank-points {
+    color: #9ca3af;
+    text-align: right;
+}
+
+.rankings-table .top-3 {
+    background: rgba(255, 215, 0, 0.05);
+}
+
+.rankings-table .top-3 .rank-num {
+    color: #ffd700;
+}
+
+/* Scrollbar for rankings table */
+.rankings-table-wrap::-webkit-scrollbar {
+    width: 6px;
+}
+
+.rankings-table-wrap::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.rankings-table-wrap::-webkit-scrollbar-thumb {
+    background: rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
+}
+
+/* Medal colors for top 3 */
+.rank-medal-1 { color: #ffd700; }
+.rank-medal-2 { color: #c0c0c0; }
+.rank-medal-3 { color: #cd7f32; }
