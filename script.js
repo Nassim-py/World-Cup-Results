@@ -47,17 +47,29 @@ async function fetchData() {
 }
 
 function populateTeams() {
-    const teams = new Set();
-    data.matches.forEach(m => { teams.add(clean(m.team1)); teams.add(clean(m.team2)); });
+    const realTeams = [
+        'Algeria', 'Argentina', 'Australia', 'Austria', 'Belgium',
+        'Bosnia & Herzegovina', 'Brazil', 'Canada', 'Cape Verde', 'Colombia',
+        'Croatia', 'Curaçao', 'Czech Republic', 'DR Congo', 'Ecuador',
+        'Egypt', 'England', 'France', 'Germany', 'Ghana',
+        'Haiti', 'Iran', 'Iraq', 'Ivory Coast', 'Japan',
+        'Jordan', 'Mexico', 'Morocco', 'Netherlands', 'New Zealand',
+        'Norway', 'Panama', 'Paraguay', 'Portugal', 'Qatar',
+        'Saudi Arabia', 'Scotland', 'Senegal', 'South Africa', 'South Korea',
+        'Spain', 'Sweden', 'Switzerland', 'Tunisia', 'Turkey',
+        'USA', 'Uruguay', 'Uzbekistan'
+    ];
+    
     const sel = document.getElementById('teamSelect');
     while (sel.options.length > 1) sel.remove(1);
-    Array.from(teams).sort().forEach(t => {
+    
+    realTeams.sort().forEach(t => {
         const opt = document.createElement('option');
         opt.value = t;
         opt.textContent = t;
         sel.appendChild(opt);
     });
-}
+        }
 
 async function loadTeam() {
     const team = document.getElementById('teamSelect').value;
