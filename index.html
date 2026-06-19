@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Cup 2026 - Team Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <i class="fas fa-futbol"></i>
+            <h1>World Cup <span>2026</span></h1>
+            <p>Team Dashboard • Live Standings</p>
+        </div>
+
+        <!-- Team Selector -->
+        <div class="selector">
+            <label>Pick your squad 👀</label>
+            <div class="selector-row">
+                <select id="teamSelect">
+                    <option value="">— Choose a team —</option>
+                </select>
+                <button onclick="loadTeam()">Show Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="hidden">
+            <!-- Team Header -->
+            <div class="team-header">
+                <div>
+                    <h2 id="teamName"></h2>
+                    <p id="teamGroup"><i class="fas fa-trophy"></i> Group <span></span></p>
+                </div>
+                <div>
+                    <p>Position</p>
+                    <div id="teamPosition">-</div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div><i class="fas fa-calendar-check"></i><p>Played</p><span id="played">0</span></div>
+                <div><i class="fas fa-trophy"></i><p>Won</p><span id="won">0</span></div>
+                <div><i class="fas fa-hand-peace"></i><p>Drawn</p><span id="drawn">0</span></div>
+                <div><i class="fas fa-frown"></i><p>Lost</p><span id="lost">0</span></div>
+                <div><i class="fas fa-star"></i><p>Points</p><span id="points">0</span></div>
+            </div>
+
+            <!-- Standings -->
+            <div class="table-wrap">
+                <h3><i class="fas fa-table-list"></i> Group Standings</h3>
+                <div class="overflow">
+                    <table>
+                        <thead><tr>
+                            <th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th>
+                            <th>GF</th><th>GA</th><th>GD</th><th>Pts</th>
+                        </tr></thead>
+                        <tbody id="standingsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Match History -->
+            <div class="match-wrap">
+                <h3><i class="fas fa-history"></i> Match History</h3>
+                <div id="matchHistory"></div>
+            </div>
+
+            <!-- Next Match -->
+            <div class="next-match">
+                <h3><i class="fas fa-clock"></i> Next Match</h3>
+                <div id="nextMatch"></div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Gathering match data...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+<!-- Footer -->
+<div class="footer">
+    <p>Made with ❤️ by <strong>Nax</strong></p>
+</div>
+</body>
+</html>
